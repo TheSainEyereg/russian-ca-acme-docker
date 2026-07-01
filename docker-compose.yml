@@ -1,0 +1,14 @@
+services:
+  acme-nuc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: acme-nuc
+    restart: unless-stopped
+    volumes:
+      # Webroot для валидации HTTP-01 (должен быть доступен веб-серверу на хосте)
+      - /var/www/html:/var/www/html
+      # Хранилище сертификатов, ключей и конфигурации acme.sh
+      - ./certs:/.acme.sh
+    environment:
+      - ACME_EMAIL
